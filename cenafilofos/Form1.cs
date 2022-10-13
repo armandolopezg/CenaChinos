@@ -5,16 +5,16 @@ namespace cenafilofos
 {
     public partial class Form1 : Form
     {
-        static sticks[] p = new sticks[5];
+        static sticks[] p = new sticks[5]; //creacion de arreglos
 
        static int comidas1 = 0;
        static int comidas2 = 0;
-       static int comidas3 = 0;
+       static int comidas3 = 0; //declaracion de variables para los enumerar las comidas
        static int comidas4 = 0;
        static int comidas5 = 0;
 
 
-        static Semaphore knuckles = new Semaphore (2,3);
+        static Semaphore knuckles = new Semaphore (2,3); //declaracion de semaforo
         public Form1()
         {
             InitializeComponent();
@@ -24,7 +24,7 @@ namespace cenafilofos
         {
             for (int i = 0; i < p.Length; i++)
             {
-                p[i] = new sticks();
+                p[i] = new sticks(); //creacion de funcion del for, esto establece el funcionamiento del programa
                 p[i].id = i + 1;
 
             }
@@ -40,7 +40,7 @@ namespace cenafilofos
             Thread thread2 = new Thread(TeAmoDrake2);
             thread2.Start();
 
-            Thread thread3 = new Thread(TeAmoDrake3);
+            Thread thread3 = new Thread(TeAmoDrake3); //creacion de hilos
             thread3.Start();
 
             Thread thread4 = new Thread(TeAmoDrake4);
@@ -56,40 +56,41 @@ namespace cenafilofos
         private void TeAmoDrake1()
         {
 
-            knuckles.WaitOne();
-            if (comidas1 == 5) 
+            knuckles.WaitOne(); //el semaforo queda en espera
+            if (comidas1 == 5)  //se declara el numero de comidas que puede ingerir el filsofo
             {
               
                 Invoke(new MethodInvoker(() =>
                 {
-                    lbl1.Text = "El filosofo se la comio";
+                    lbl1.Text = "El filosofo se la comio"; //se hace el cambio de texto una vez que el filosofo llego a las 5 comidas
                 }));
             }
 
             else
             {
-                if (palillo1.ForeColor == Color.Black && palillo5.ForeColor == Color.Black)
+                if (palillo1.ForeColor == Color.Black && palillo5.ForeColor == Color.Black) //si el palillo no se esta utilizando este cambia a color negro
                 {
                     Invoke(new MethodInvoker(() =>
                     {
-                        palillo1.ForeColor = Color.Red;
+                        palillo1.ForeColor = Color.Red; //Cuando el palillo se ocupe este cambia a color rojo
                         palillo5.ForeColor = Color.Red;
 
                     }));
 
-                    comidas1++;
-                    Thread.Sleep(5000);
+                    comidas1++; //cada que se inicie el proceso este registrara el numero de comidas +1
+                    Thread.Sleep(5000); //tiempo que tardara el hilo en ser ejecutado, esto es de 5 seg
                     Invoke(new MethodInvoker(() =>
                     {
                         palillo1.ForeColor = Color.Black;
-                        palillo5.ForeColor = Color.Black;
+                        palillo5.ForeColor = Color.Black; //si el palillo no se esta ocupando este cambiara a ser de color negro
                         lbl1.Text = comidas1.ToString();
                     }));
                 }
          
-            } knuckles.Release();
+            } knuckles.Release();//el semaforo se libera y hace su proceso
         }
 
+        //Los mismos comentarios aplican para las funciones "TeAmoDrake2-5"
         private void TeAmoDrake2()
         {
 
@@ -242,3 +243,5 @@ namespace cenafilofos
 
     }
 }
+
+//
